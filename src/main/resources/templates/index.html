@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    </head>
+    
+    <body>
+        <div class="container">
+            <div class="py-5 text-center"><h1>LIBRERIA SPRING</h1></div>
+            <br>
+                <div class="col-lg-6 order-lg-1">
+                    <h3 class="display-4">Cargar Autor</h3>
+                    <form th:action="@{/autor/registrarAutor}" method="POST"> 
+                        <div class="form-group">
+                            <br>
+                            <label for="exampleInputNombre">Nombre:</label>
+                            <input type="text" class="form-control" name="nombre">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                    <br>
+                    <button><a th:href="@{/autor/listar_autores}">Lista de Autores</a></button>
+                    <br>
+                </div>
+            
+            <br>
+            <br>
+            
+                <div class="col-lg-6 order-lg-1">
+                    <h3 class="display-4">Cargar Editorial</h3>
+                    <form th:action="@{/editorial/registrarEditorial}" method="POST"> 
+                        <div class="form-group">
+                            <br>
+                            <label for="exampleInputNombre">Nombre:</label>
+                            <input type="text" class="form-control" name="nombreEditorial">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                    <br>
+                    <button><a th:href="@{/editorial/listar_editorial}">Lista de Editoriales</a></button>
+                    <br>
+                </div>
+        </div>
+    </body>
+</html>

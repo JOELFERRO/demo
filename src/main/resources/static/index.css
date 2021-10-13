@@ -1,0 +1,32 @@
+
+p {
+    font-size: 0.3cm;
+    font-family: arial, helvetica;
+    font-weight: normal;
+    color: #001;
+    text-align: justify;
+    }
+    h1 {
+    font-size: 0.5cm;
+    font-family: verdana, arial;
+    text-decoration: underline;
+    text-align: center;
+    background-color: Teal;
+    }
+    h2{
+        color: #000;
+    }
+    div{
+        color: #000;
+    }
+    ol{
+        color: #000;
+    }
+    ul{
+        color: #000;
+    }
+    body {
+    background-color: grey;
+    font-family: arial;
+    color: White;
+    }
