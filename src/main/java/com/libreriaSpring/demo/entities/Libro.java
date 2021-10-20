@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -16,14 +15,19 @@ public class Libro implements Serializable {
     @GenericGenerator(name = "uuid",strategy = "uuid2")
     private String id;
     private String titulo;
-    @OneToOne
+    @ManyToOne
     private Autor autor;
     @ManyToOne
     private Editorial editorial;
-
+    
+    private Integer stock;
+    private Integer prestados;
+    
+    //Constructor Vacío
     public Libro() {
     }
-
+    
+    //Constructor Lleno
     public Libro(String titulo, Autor autor, Editorial editorial) {
         this.titulo = titulo;
         this.autor = autor;
@@ -60,6 +64,22 @@ public class Libro implements Serializable {
 
     public void setEditorial(Editorial editorial) {
         this.editorial = editorial;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+  
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public Integer getPrestados() {
+        return prestados;
+    }
+
+    public void setPrestados(Integer prestados) {
+        this.prestados = prestados;
     }
      
     

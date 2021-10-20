@@ -1,14 +1,19 @@
 package com.libreriaSpring.demo.controllers;
 
 import com.libreriaSpring.demo.entities.Editorial;
+import com.libreriaSpring.demo.exceptions.ErrorServicio;
 import com.libreriaSpring.demo.services.EditorialServicio;
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/editorial")
@@ -19,13 +24,16 @@ public class EditorialController {
     
     //EDITORIAL
     @PostMapping("/registrarEditorial")
-    public String registrarEditorial(String nombreEditorial){
-//        try{
-        editorialServicio.guardarEditorial(nombreEditorial);
+    public String registrarEditorial(Model modelo, @RequestParam String nombre) {
+        
+        try {    
+            editorialServicio.guardarEditorial(nombre);
+        } catch (ErrorServicio ex) {
+            modelo.addAttribute("errorE", ex.getMessage());
+            java.util.logging.Logger.getLogger(EditorialController.class.getName()).log(Level.SEVERE, null, ex);
+            return "index";
+        }
         return "index";
-//        }catch(NullPointerException e){
-//        return "index";
-//        }
     }
     
     @RequestMapping("/eliminarEditorial")
@@ -38,15 +46,31 @@ public class EditorialController {
         }
     }
     
+    @GetMapping("/editar_editorial/{id}")
+    public String editarEditorial(Model model, @PathVariable String id){
+        
+        Optional<Editorial> editorial = editorialServicio.findEditorialById(id);
+        model.addAttribute ("editorial", editorial);
+
+        return "editar_editorial"; 
+    } 
+    
+    @PostMapping("/modificar_editorial/{id}/{nombre}")
+    public String modificarEditorial(@PathVariable String id, @RequestParam String nombre){
+        System.out.println("esta ingresando al metodo " + id);
+        try {
+            editorialServicio.editarEditorial(id, nombre);
+        } catch (ErrorServicio ex) {
+            System.out.println("Error al guardar");
+        }
+      return "redirect:/editorial/listar_editorial";
+    }
+    
     @GetMapping("/listar_editorial")
     public String listarEditorial(Model model){
-        try{
-        List<Editorial> editorialList = editorialServicio.listarEditoriales();
+        List<Editorial> editoriales = editorialServicio.listarEditoriales();
         model.addAttribute("titulo", "LISTA DE EDITORIAL");
-        model.addAttribute("editorial", editorialList);
-        return "listar_editorial";
-        }catch(NullPointerException e){
-        return "listar_editorial";
-        }
+        model.addAttribute("editoriales", editoriales);
+        return "listar_editorial";        
     }
 }
